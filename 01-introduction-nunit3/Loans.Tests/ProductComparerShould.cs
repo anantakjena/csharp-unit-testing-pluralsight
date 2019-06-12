@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Loans.Tests
 {
-    [Category("Product Comparison")]
+    [ProductComparison]
     public class ProductComparerShould
     {
         private List<LoanProduct> products;
@@ -86,12 +86,16 @@ namespace Loans.Tests
             //                            .Property("MonthlyRepayment").GreaterThan(0));
 
             // Properties comparison with exact property from instance
+            //Assert.That(comparisons, Has.Exactly(1)
+            //                        .Matches<MonthlyRepaymentComparison>(
+            //                            item => item.ProductName == "a" &&
+            //                            item.InterestRate == 1 &&
+            //                            item.MonthlyRepayment > 0
+            //                        ));
+
+            // Properties comparison using a custom constraint
             Assert.That(comparisons, Has.Exactly(1)
-                                    .Matches<MonthlyRepaymentComparison>(
-                                        item => item.ProductName == "a" &&
-                                        item.InterestRate == 1 &&
-                                        item.MonthlyRepayment > 0
-                                    ));
+                                      .Matches(new MonthlyRepaymentGreaterThanZeroConstraint("a", 1)));
         }
     }
 }
