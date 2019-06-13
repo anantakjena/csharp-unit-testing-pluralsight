@@ -38,11 +38,31 @@ namespace Loans.Domain.Applications
 
             _identityVerifier.Initialize();
 
-            var isValidIdentity = _identityVerifier.Validate(application.GetApplicantName(), 
-                                                             application.GetApplicantAge(), 
-                                                             application.GetApplicantAddress());
+            // 1. Overload with only applicant params
+            //var isValidIdentity = _identityVerifier.Validate(application.GetApplicantName(), 
+            //                                                 application.GetApplicantAge(), 
+            //                                                 application.GetApplicantAddress());
 
-            if (!isValidIdentity)
+            // 2. Overload with out param for identity validation
+            //_identityVerifier.Validate(application.GetApplicantName(),
+            //                           application.GetApplicantAge(),
+            //                           application.GetApplicantAddress(),
+            //                           out var isValidIdentity);
+
+            //if (!isValidIdentity)
+            //{
+            //    application.Decline();
+            //    return;
+            //}
+
+            // 3. Overload with ref param for identity validation
+            IdentityVerificationStatus status = null;
+            _identityVerifier.Validate(application.GetApplicantName(),
+                                       application.GetApplicantAge(),
+                                       application.GetApplicantAddress(),
+                                       ref status);
+
+            if (!status.Passed)
             {
                 application.Decline();
                 return;
