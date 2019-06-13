@@ -39,9 +39,9 @@ namespace Loans.Domain.Applications
             _identityVerifier.Initialize();
 
             // 1. Overload with only applicant params
-            //var isValidIdentity = _identityVerifier.Validate(application.GetApplicantName(), 
-            //                                                 application.GetApplicantAge(), 
-            //                                                 application.GetApplicantAddress());
+            var isValidIdentity = _identityVerifier.Validate(application.GetApplicantName(),
+                                                             application.GetApplicantAge(),
+                                                             application.GetApplicantAddress());
 
             // 2. Overload with out param for identity validation
             //_identityVerifier.Validate(application.GetApplicantName(),
@@ -49,30 +49,33 @@ namespace Loans.Domain.Applications
             //                           application.GetApplicantAddress(),
             //                           out var isValidIdentity);
 
-            //if (!isValidIdentity)
-            //{
-            //    application.Decline();
-            //    return;
-            //}
-
-            // 3. Overload with ref param for identity validation
-            IdentityVerificationStatus status = null;
-            _identityVerifier.Validate(application.GetApplicantName(),
-                                       application.GetApplicantAge(),
-                                       application.GetApplicantAddress(),
-                                       ref status);
-
-            if (!status.Passed)
+            if (!isValidIdentity)
             {
                 application.Decline();
                 return;
             }
 
+            // 3. Overload with ref param for identity validation
+            //IdentityVerificationStatus status = null;
+            //_identityVerifier.Validate(application.GetApplicantName(),
+            //                           application.GetApplicantAge(),
+            //                           application.GetApplicantAddress(),
+            //                           ref status);
+
+            //if (!status.Passed)
+            //{
+            //    application.Decline();
+            //    return;
+            //}
+
 
             _creditScorer.CalculateScore(application.GetApplicantName(), 
                                          application.GetApplicantAddress());
 
-            if (_creditScorer.Score < MinimumCreditScore)
+            _creditScorer.Count++;
+
+            //if (_creditScorer.Score < MinimumCreditScore)
+            if (_creditScorer.ScoreResult.ScoreValue.Score < MinimumCreditScore)
             {
                 application.Decline();
                 return;
