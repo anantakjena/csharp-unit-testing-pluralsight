@@ -6,7 +6,7 @@ Pluralsight code courses that I've gone through related to .NET unit testing.
 
 - [Introduction to .NET Testing with NUnit 3](https://github.com/davikawasaki/csharp-unit-testing-pluralsight/tree/master/01-introduction-nunit3)
 
-- Mocking with Moq and NUnit
+- [Mocking with Moq and NUnit](https://github.com/davikawasaki/csharp-unit-testing-pluralsight/tree/master/02-mocking-moq-nunit)
 
 - Writing Testable Code
 

@@ -52,7 +52,7 @@ namespace Loans.Tests
 
         [Test]
         // Data-driven test with a source coming from a CSV. Needs to set a method params array object with the CSV location path.
-        [TestCaseSource(typeof(MonthlyRepaymentCsvData), "GetTestCases", new object[] { "Mock/Data.csv", "en-US" })]
+        [TestCaseSource(typeof(MonthlyRepaymentCsvData), "GetTestCases", new object[] { "Data/Data.csv", "en-US" })]
         public void CalculateCorrectMonthlyRepayment_Csv(decimal principal, decimal interestRate, int termInYears, decimal expectedMonthlyPayment)
         {
             var sut = new LoanRepaymentCalculator();
